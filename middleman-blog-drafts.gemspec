@@ -1,24 +1,24 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
+require "middleman-blog-drafts/version"
 
 Gem::Specification.new do |s|
   s.name        = "middleman-blog-drafts"
-  s.version     = "0.0.1"
-  s.platform    = Gem::Platform::RUBY
-  # s.authors     = ["Your Name"]
-  # s.email       = ["email@example.com"]
-  # s.homepage    = "http://example.com"
-  # s.summary     = %q{A short summary of your extension}
-  # s.description = %q{A longer description of your extension}
+  s.version     = Middleman::Blog::Drafts::VERSION
+  s.authors     = ["Fabio Rehm"]
+  s.email     = ["fgrehm@gmail.com"]
+  s.description = %q{middleman-blog extension for working with draft articles}
+  s.summary     = s.description
+  s.homepage    = "https://github.com/fgrehm/middleman-draft-articles"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files         = `git ls-files`.split($/)
+  s.executables   = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
-  
+
   # The version of middleman-core your extension depends on
   s.add_runtime_dependency("middleman-core", [">= 3.0.9"])
-  
+
   # Additional dependencies
-  # s.add_runtime_dependency("gem-name", "gem-version")
+  s.add_runtime_dependency("middleman-blog")
 end
