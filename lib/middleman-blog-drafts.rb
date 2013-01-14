@@ -1,5 +1,6 @@
 require "middleman-core"
 
+require "middleman-blog-drafts/version"
 
 module Middleman
   module Blog
