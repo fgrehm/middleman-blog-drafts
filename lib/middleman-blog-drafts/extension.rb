@@ -1,38 +1,37 @@
 module Middleman
   module Blog
     module Drafts
+      class Options
+        attr_accessor :sources, :layout
+
+        def initialize(options={})
+          options.each do |k,v|
+            self.send(:"#{k}=", v)
+          end
+        end
+      end
+
       class << self
         # Called when user `activate`s your extension
-        def registered(app, options={})
-          # Setup extension-specific config
-          app.set :config_variable, false
+        def registered(app, options_hash={}, &block)
+          require 'middleman-blog/extension'
+          require 'middleman-blog/blog_data'
+          require 'middleman-blog-drafts/blog_data_extensions'
 
-          # Include class methods
-          # app.extend ClassMethods
+          options = Options.new(options_hash)
+          yield options if block_given?
 
-          # Include instance methods
-          # app.send :include, InstanceMethods
+          options.sources ||= "drafts/:title.html"
+
+          ::Middleman::Blog::BlogData.send :include, BlogDataExtensions
 
           app.after_configuration do
-            # Do something
-
-            # config_variable is now either the default or the user's
-            # setting from config.rb
+            options.layout = blog.options.layout
+            blog.drafts(options)
           end
         end
         alias :included :registered
       end
-
-      # module ClassMethods
-      #   def a_class_method
-      #   end
-      # end
-
-      # module InstanceMethods
-      #   def an_instance_method
-      #   end
-      # end
-
     end
   end
 end
