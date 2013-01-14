@@ -16,9 +16,6 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  # The version of middleman-core your extension depends on
   s.add_runtime_dependency("middleman-core", [">= 3.0.9"])
-
-  # Additional dependencies
   s.add_runtime_dependency("middleman-blog")
 end
