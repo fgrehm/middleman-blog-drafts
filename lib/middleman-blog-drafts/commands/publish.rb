@@ -44,8 +44,9 @@ module Middleman
           article_path = File.join(shared_instance.source_dir, article_path + extension)
 
           data, content = shared_instance.frontmatter_manager.data(draft_path)
+          data = data.dup.tap { |d| d[:date] = Date.parse @date.strftime('%F') }
 
-          create_file article_path, "---\n#{}\n---\n#{content}"
+          create_file article_path, "#{YAML::dump(data).sub(/^--- !ruby.*$/, '---')}---\n#{content}"
           remove_file draft_path
         else
           raise Thor::Error.new "You need to activate the drafts extension in config.rb before you can publish an article"
