@@ -4,20 +4,32 @@ module Middleman
       # An extension to let {Middleman::Blog::BlogData} know about all draft
       # articles in the site.
       module BlogDataExtensions
-        def drafts(options=nil)
-          @_drafts ||= Middleman::Blog::Drafts::Data.new(self, options)
+        def drafts(app=nil, options=nil)
+          @_drafts ||= Middleman::Blog::Drafts::Data.new(self, app, options)
+        end
+
+        # A draft BlogArticle for the given path, or nil if one doesn't exist.
+        # @return [Middleman::Sitemap::Resource]
+        def draft(path)
+          article = drafts.options.app.sitemap.find_resource_by_path(path.to_s)
+          if article && article.is_a?(BlogArticle)
+            article
+          else
+            nil
+          end
         end
       end
 
       # A store of all the draft articles in the site. Accessed via "blog.drafts" in
       # templates.
       class Data
-        attr_reader :options
+        attr_reader :options, :path_matcher, :matcher_indexes
 
         # @private
-        def initialize(blog_data, options)
+        def initialize(blog_data, app, options)
           @blog_data = blog_data
-          @options = options
+          @options   = options
+          @app       = app
 
           # A list of resources corresponding to draft articles
           @_drafts = []
@@ -26,10 +38,7 @@ module Middleman
               sub(/^\//, "").
               sub(":title", "([^/]+)")
 
-          subdir_matcher = matcher.sub(/\\\.[^.]+$/, "(/.*)$")
-
           @path_matcher = /^#{matcher}/
-          @subdir_matcher = /^#{subdir_matcher}/
 
           # Build a hash of part name to capture index, e.g. {"year" => 0}
           @matcher_indexes = {}
@@ -39,6 +48,36 @@ module Middleman
             end
           # The path always appears at the end.
           @matcher_indexes["path"] = @matcher_indexes.size
+        end
+
+        # Updates' blog draft articles destination paths to be the
+        # permalink.
+        # @return [void]
+        def manipulate_resource_list(resources)
+          @_drafts = []
+          used_resources = []
+
+          resources.each do |resource|
+            if resource.path =~ @path_matcher
+              resource.extend BlogArticle
+              resource.extend DraftArticle
+
+              # TODO:
+              # next unless @app.environment == :development && (some way to skip draft articles compilation)
+
+              # compute output path:
+              resource.destination_path = options.permalink.
+                sub(':title', resource.slug)
+
+              resource.destination_path = Middleman::Util.normalize_path(resource.destination_path)
+
+              @_drafts << resource
+            end
+
+            used_resources << resource
+          end
+
+          used_resources
         end
       end
     end

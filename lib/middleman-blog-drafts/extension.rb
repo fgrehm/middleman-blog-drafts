@@ -2,7 +2,7 @@ module Middleman
   module Blog
     module Drafts
       class Options
-        attr_accessor :sources, :layout
+        attr_accessor :sources, :layout, :permalink
 
         def initialize(options={})
           options.each do |k,v|
@@ -16,21 +16,38 @@ module Middleman
         def registered(app, options_hash={}, &block)
           require 'middleman-blog/extension'
           require 'middleman-blog/blog_data'
+          require 'middleman-blog-drafts/draft_article'
           require 'middleman-blog-drafts/blog_data_extensions'
 
           options = Options.new(options_hash)
           yield options if block_given?
 
-          options.sources ||= "drafts/:title.html"
+          options.sources   ||= "drafts/:title.html"
+          options.permalink ||= "/drafts/:title.html"
 
           ::Middleman::Blog::BlogData.send :include, BlogDataExtensions
+          app.send :include, Helpers
 
           app.after_configuration do
             options.layout = blog.options.layout
-            blog.drafts(options)
+            blog.drafts(self, options)
+
+            sitemap.register_resource_list_manipulator(
+                                                     :blog_drafts,
+                                                     blog.drafts,
+                                                     false
+                                                     )
           end
         end
         alias :included :registered
+      end
+
+      module Helpers
+        # Get a {Resource} with mixed in {BlogArticle} methods representing the current article.
+        # @return [Middleman::Sitemap::Resource]
+        def current_article
+          super || blog.draft(current_resource.path)
+        end
       end
     end
   end
