@@ -25,6 +25,13 @@ module Middleman
         def date
           Time.now.in_time_zone
         end
+
+        # Extends resource data adding the date field
+        #
+        # @return [Thor::CoreExt::HashWithIndifferentAccess]
+        def data
+          super.dup.merge(date: date)
+        end
       end
     end
   end
