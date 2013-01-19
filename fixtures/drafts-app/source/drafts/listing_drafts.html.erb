@@ -1,0 +1,11 @@
+---
+title: "Drafts List"
+---
+
+<% unless settings.build? %>
+  <ul>
+    <% drafts.each do |draft| %>
+      <li><%= draft.title %></li>
+    <% end %>
+  </ul>
+<% end %>

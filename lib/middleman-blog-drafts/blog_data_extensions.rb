@@ -78,6 +78,12 @@ module Middleman
 
           used_resources
         end
+
+        # A list of all draft articles.
+        # @return [Array<Middleman::Sitemap::Resource>]
+        def articles
+          @_drafts
+        end
       end
     end
   end

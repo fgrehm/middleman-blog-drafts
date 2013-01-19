@@ -48,6 +48,13 @@ module Middleman
         def current_article
           super || blog.draft(current_resource.path)
         end
+
+
+        # Returns the list of drafts on the site.
+        # @return [Array<Middleman::Sitemap::Resource>]
+        def drafts
+          blog.drafts.articles
+        end
       end
     end
   end
