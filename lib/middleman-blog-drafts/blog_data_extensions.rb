@@ -62,8 +62,7 @@ module Middleman
               resource.extend BlogArticle
               resource.extend DraftArticle
 
-              # TODO:
-              # next unless @app.environment == :development && (some way to skip draft articles compilation)
+              next unless @app.environment == :development
 
               # compute output path:
               resource.destination_path = options.permalink.
