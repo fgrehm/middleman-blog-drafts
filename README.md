@@ -35,7 +35,7 @@ middleman publish source/drafts/my-awesome-new-blog-post.markdown
 ```erb
 <% unless settings.build? %>
   <ul>
-    <%= drafts.each do |draft| %>
+    <% drafts.each do |draft| %>
       <li><%= link_to draft.title, draft.path %></li>
     <% end %>
   </ul>
