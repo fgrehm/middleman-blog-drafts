@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency("middleman-core", [">= 3.0.9"])
+  s.add_runtime_dependency("middleman-core", [">= 3.1.4"])
   s.add_runtime_dependency("middleman-blog")
 end

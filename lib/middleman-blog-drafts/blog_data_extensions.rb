@@ -11,7 +11,7 @@ module Middleman
         # A draft BlogArticle for the given path, or nil if one doesn't exist.
         # @return [Middleman::Sitemap::Resource]
         def draft(path)
-          article = drafts.options.app.sitemap.find_resource_by_path(path.to_s)
+          article = @app.sitemap.find_resource_by_path(path.to_s)
           if article && article.is_a?(BlogArticle)
             article
           else
