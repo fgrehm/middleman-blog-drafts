@@ -62,7 +62,7 @@ module Middleman
               resource.extend BlogArticle
               resource.extend DraftArticle
 
-              next unless @app.environment == :development
+              next unless @app.environment == :development || @options.build
 
               # compute output path:
               resource.destination_path = options.permalink.
