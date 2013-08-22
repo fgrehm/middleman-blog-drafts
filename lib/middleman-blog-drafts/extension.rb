@@ -2,7 +2,7 @@ module Middleman
   module Blog
     module Drafts
       class Options
-        attr_accessor :sources, :layout, :permalink
+        attr_accessor :sources, :layout, :permalink, :build
 
         def initialize(options={})
           options.each do |k,v|
