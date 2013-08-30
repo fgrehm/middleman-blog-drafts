@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in middleman-blog-drafts.gemspec
 gemspec
 
+gem "sass"
+gem "compass"
+
 group :development do
   gem "rake",     "~> 0.9.2"
   gem "rdoc",     "~> 3.9"
