@@ -1,5 +1,7 @@
 # middleman-blog-drafts
 
+[![Build Status](https://travis-ci.org/fgrehm/middleman-blog-drafts.png?branch=master)](https://travis-ci.org/fgrehm/middleman-blog-drafts)
+
 middleman-blog-drafts is an addon for [middleman-blog](https://github.com/middleman/middleman-blog)
 that simplifies draft posts creation and publishing.
 
