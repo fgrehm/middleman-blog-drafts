@@ -35,7 +35,7 @@ middleman publish source/drafts/my-awesome-new-blog-post.markdown
 ## Listing drafts on a page
 
 ```erb
-<% if settings[:environment] == :development %>
+<% if drafts.any? %>
   <ul>
     <% drafts.each do |draft| %>
       <li><%= link_to draft.title, draft.path %></li>
@@ -43,6 +43,22 @@ middleman publish source/drafts/my-awesome-new-blog-post.markdown
   </ul>
 <% end %>
 ```
+
+As drafts won't be be available in the generated page by default, checking whether there are any is enough to decide whether to render the listing or not.
+
+## Configuration options
+
+`build`: when `true`, the drafts will be available unconditionally. If not given, the drafts will be available in middlemans development mode and unavailable in `middleman build`.
+
+This allows you to control the behaviour, for example if you have a preview instance of your blog. One way to do so would be to set it based on an environment variable:
+
+```ruby
+activate :drafts do |drafts|
+  drafts.build = true if ENV["SHOW_DRAFTS"]
+end
+```
+
+This activates drafts in any environment where `SHOW_DRAFTS` is given and uses the default otherwise.
 
 ## Learn More
 
