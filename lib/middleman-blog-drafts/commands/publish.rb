@@ -45,9 +45,9 @@ module Middleman
 
           # Access to extensions changed in Middleman 3.1
           if shared_instance.respond_to? :frontmatter_manager
-              frontmatter_mgr = shared_instance.frontmatter_manager
+            frontmatter_mgr = shared_instance.frontmatter_manager
           else
-              frontmatter_mgr = shared_instance.extensions[:frontmatter]
+            frontmatter_mgr = shared_instance.extensions[:frontmatter]
           end
 
           data, content = frontmatter_mgr.data(draft_path)
