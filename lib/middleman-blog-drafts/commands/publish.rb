@@ -43,14 +43,7 @@ module Middleman
             sub(':title', @slug)
           article_path = File.join(shared_instance.source_dir, article_path + extension)
 
-          # Access to extensions changed in Middleman 3.1
-          if shared_instance.respond_to? :frontmatter_manager
-            frontmatter_mgr = shared_instance.frontmatter_manager
-          else
-            frontmatter_mgr = shared_instance.extensions[:frontmatter]
-          end
-
-          data, content = frontmatter_mgr.data(draft_path)
+          data, content = shared_instance.extensions[:frontmatter].data(draft_path)
           data = data.dup.tap { |d| d[:date] = Date.parse @date.strftime('%F') }
 
           create_file article_path, "#{YAML::dump(data).sub(/^--- !ruby.*$/, '---')}---\n#{content}"
