@@ -33,7 +33,7 @@ middleman publish source/drafts/my-awesome-new-blog-post.markdown
 ## Listing drafts on a page
 
 ```erb
-<% unless settings.build? %>
+<% if settings[:environment] == :development %>
   <ul>
     <% drafts.each do |draft| %>
       <li><%= link_to draft.title, draft.path %></li>

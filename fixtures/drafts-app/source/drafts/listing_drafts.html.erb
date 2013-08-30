@@ -2,7 +2,7 @@
 title: "Drafts List"
 ---
 
-<% unless settings.build? %>
+<% if settings[:environment] == :development %>
   <ul>
     <% drafts.each do |draft| %>
       <li><%= draft.title %></li>
