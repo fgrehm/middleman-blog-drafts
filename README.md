@@ -62,7 +62,7 @@ This activates drafts in any environment where `SHOW_DRAFTS` is given and uses t
 
 ## Learn More
 
-See the [blog extension guide](http://middlemanapp.com/blogging/) for detailed
+See the [blog extension guide](http://middlemanapp.com/basics/blogging/) for detailed
 information on configuring and using the blog extension.
 
 ## Credits
