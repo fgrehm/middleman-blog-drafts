@@ -1,10 +1,12 @@
 require 'middleman-core/cli'
+require 'middleman-blog/uri_templates'
 
 module Middleman
   module Cli
     # This class provides a "draft" command for the middleman CLI.
     class Draft < Thor
       include Thor::Actions
+      include Blog::UriTemplates
 
       check_unknown_options!
 
@@ -26,17 +28,18 @@ module Middleman
         shared_instance = ::Middleman::Application.server.inst
 
         # This only exists when the config.rb sets it!
-        if shared_instance.blog.respond_to? :drafts
-          @title = title
-          @slug = title.parameterize
-
-          draft_path = shared_instance.blog.drafts.options.sources.
-            sub(':title', @slug)
-
-          template "draft.tt", File.join(shared_instance.source_dir, draft_path + shared_instance.blog.options.default_extension)
-        else
+        unless shared_instance.blog.respond_to? :drafts
           raise Thor::Error.new "You need to activate the drafts extension in config.rb before you can create an article"
         end
+
+        @title = title
+        @slug = safe_parameterize title
+
+        path_template = shared_instance.blog.drafts.source_template
+        draft_path = apply_uri_template path_template, title: @slug
+        draft_path << shared_instance.blog.options.default_extension
+
+        template "draft.tt", File.join(shared_instance.source_dir, draft_path)
       end
     end
   end

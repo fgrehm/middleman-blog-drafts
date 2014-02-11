@@ -1,5 +1,5 @@
 require 'middleman-blog'
-activate :blog do |c|
-  c.prefix = 'blog'
+activate :blog do |b|
+  b.prefix = 'blog'
 end
 activate :drafts

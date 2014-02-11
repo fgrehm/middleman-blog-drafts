@@ -5,8 +5,6 @@
 middleman-blog-drafts is an addon for [middleman-blog](https://github.com/middleman/middleman-blog)
 that simplifies draft posts creation and publishing.
 
-**NOTICE: This extension is no longer being maintained, if you are interested on picking up the gem name or wants to continue the work on it please let [@fgrehm](https://github.com/fgrehm) know.**
-
 ## Install
 
 If you're just getting started, install the required gems and generate a new blog project:

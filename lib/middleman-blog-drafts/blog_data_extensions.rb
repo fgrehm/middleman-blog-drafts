@@ -1,3 +1,6 @@
+require 'middleman-blog/uri_templates'
+require 'middleman-blog-drafts/draft_article'
+
 module Middleman
   module Blog
     module Drafts
@@ -20,55 +23,52 @@ module Middleman
         end
       end
 
-      # A store of all the draft articles in the site. Accessed via "blog.drafts" in
-      # templates.
+      # A store of all the draft articles in the site. Accessed via
+      # {blog.drafts} in templates.
       class Data
-        attr_reader :options, :path_matcher, :matcher_indexes
+        include UriTemplates
+
+        # A URITemplate for the source file path relative to blog's :source_dir
+        # @return [URITemplate]
+        attr_reader :source_template
+
+        # The configured options for this blog
+        # @return [Thor::CoreExt::HashWithIndifferentAccess]
+        attr_reader :options
 
         # @private
         def initialize(blog_data, app, options)
           @blog_data = blog_data
-          @options   = options
           @app       = app
+          @options   = options
 
           # A list of resources corresponding to draft articles
           @_drafts = []
 
-          matcher = Regexp.escape(options.sources).
-              sub(/^\//, "").
-              sub(":title", "([^/]+)")
-
-          @path_matcher = /^#{matcher}/
-
-          # Build a hash of part name to capture index, e.g. {"year" => 0}
-          @matcher_indexes = {}
-          options.sources.scan(/:title/).
-            each_with_index do |key, i|
-              @matcher_indexes[key[1..-1]] = i
-            end
-          # The path always appears at the end.
-          @matcher_indexes["path"] = @matcher_indexes.size
+          @source_template = uri_template options.sources
+          @permalink_template = uri_template options.permalink
         end
 
-        # Updates' blog draft articles destination paths to be the
-        # permalink.
+        # A list of all draft articles.
+        # @return [Array<Middleman::Sitemap::Resource>]
+        def articles
+          @_drafts.sort_by(&:title)
+        end
+
+        # Update blog draft articles destination paths to be the permalink.
         # @return [void]
         def manipulate_resource_list(resources)
           @_drafts = []
           used_resources = []
 
           resources.each do |resource|
-            if resource.path =~ @path_matcher
-              resource.extend BlogArticle
-              resource.extend DraftArticle
+            if (params = extract_params(@source_template, resource.path))
+              draft = convert_to_draft(resource)
+              next unless build?(draft)
 
-              next unless @app.environment == :development || @options.build
-
-              # compute output path:
-              resource.destination_path = options.permalink.
-                sub(':title', resource.slug)
-
-              resource.destination_path = Middleman::Util.normalize_path(resource.destination_path)
+              # compute output path
+              draft.destination_path =
+                apply_uri_template @permalink_template, title: draft.slug
 
               @_drafts << resource
             end
@@ -79,10 +79,26 @@ module Middleman
           used_resources
         end
 
-        # A list of all draft articles.
-        # @return [Array<Middleman::Sitemap::Resource>]
-        def articles
-          @_drafts
+        # Whether or not a given draft should be included in the sitemap.
+        # @param [DraftArticle] draft A draft article
+        # @return [Boolean] Whether it should be built
+        def build?(draft)
+          @app.environment == :development || @options.build
+        end
+
+        private
+
+        # Convert the resource into a DraftArticle.
+        # @param [Sitemap::Resource] resource The resource to convert
+        # @return [Sitemap::Resource] The converted resource
+        def convert_to_draft(resource)
+          return resource if resource.is_a? DraftArticle
+
+          resource.extend BlogArticle
+          resource.extend DraftArticle
+          resource.blog_controller = @blog_data.controller
+
+          resource
         end
       end
     end

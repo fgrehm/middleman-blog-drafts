@@ -1,20 +1,22 @@
 source 'https://rubygems.org'
 
+gem "middleman-core", :github => "middleman/middleman", :branch => 'v3-stable'
+
 # Specify your gem's dependencies in middleman-blog-drafts.gemspec
 gemspec
 
-group :development do
-  gem "rdoc",     "~> 3.9"
-  gem "yard",     "~> 0.8.0"
-  gem "guard-cucumber"
-end
+gem "sass"
+gem "compass"
+gem "kramdown"
 
-group :development, :test do
-  gem "sass"
-  gem "compass"
-  gem "rake",     "~> 0.9.2"
-  gem "cucumber", "~> 1.2.0"
-  gem "fivemat"
-  gem "aruba",    "~> 0.4.11"
-  gem "rspec",    "~> 2.7"
+gem "rake",     "~> 10.1.0"
+gem "cucumber", "~> 1.3.1"
+gem "fivemat"
+gem "aruba",    "~> 0.5.1"
+gem "cane", :platforms => [:mri_19, :mri_20], :require => false
+
+group :development do
+  gem "rdoc",   "~> 3.9"
+  gem "yard",   "~> 0.8.0"
+  gem "guard-cucumber"
 end
