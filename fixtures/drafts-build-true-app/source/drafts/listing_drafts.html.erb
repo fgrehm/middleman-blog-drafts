@@ -1,0 +1,11 @@
+---
+title: "Drafts List"
+---
+
+<% if settings[:environment] == :development %>
+  <ul>
+    <% drafts.each do |draft| %>
+      <li><%= draft.title %></li>
+    <% end %>
+  </ul>
+<% end %>

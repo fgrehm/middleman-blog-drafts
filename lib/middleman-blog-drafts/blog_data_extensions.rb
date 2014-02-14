@@ -83,7 +83,9 @@ module Middleman
         # @param [DraftArticle] draft A draft article
         # @return [Boolean] Whether it should be built
         def build?(draft)
-          @app.environment == :development || @options.build
+          build = draft.data["build"]
+          build = @options.build if build == nil
+          @app.environment == :development || build
         end
 
         private

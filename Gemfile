@@ -19,4 +19,5 @@ group :development do
   gem "rdoc",   "~> 3.9"
   gem "yard",   "~> 0.8.0"
   gem "guard-cucumber"
+  gem 'pry'
 end

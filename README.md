@@ -44,13 +44,18 @@ middleman publish source/drafts/my-awesome-new-blog-post.markdown
 <% end %>
 ```
 
-As drafts won't be be available in the generated page by default, checking whether there are any is enough to decide whether to render the listing or not.
+As drafts won't be be available in the generated page by default, checking
+whether there are any is enough to decide whether to render the listing or not.
 
 ## Configuration options
 
-`build`: when `true`, the drafts will be available unconditionally. If not given, the drafts will be available in middlemans development mode and unavailable in `middleman build`.
+`build`: when `true`, the drafts will be available unconditionally. If not
+given, the drafts will be available in middleman's development mode and
+unavailable in `middleman build`.
 
-This allows you to control the behaviour, for example if you have a preview instance of your blog. One way to do so would be to set it based on an environment variable:
+This allows you to control the behaviour, for example if you have a preview
+instance of your blog. One way to do so would be to set it based on an
+environment variable:
 
 ```ruby
 activate :drafts do |drafts|
@@ -58,16 +63,36 @@ activate :drafts do |drafts|
 end
 ```
 
-This activates drafts in any environment where `SHOW_DRAFTS` is given and uses the default otherwise.
+This activates drafts in any environment where `SHOW_DRAFTS` is given and uses
+the default otherwise.
+
+## Frontmatter options
+
+`build` can be overriden on a per-draft basis. For example if you want to make
+a draft available to a small audience for proofreading, you may force the build
+of that one draft with the following frontmatter:
+
+```yaml
+---
+title: "Example blog post"
+build: true
+---
+```
+
+Likewise if you configure `build` to `true` for your entire blog, you may still
+withhold single drafts from being built by setting `build: false` in the
+frontmatter.
 
 ## Learn More
 
-See the [blog extension guide](http://middlemanapp.com/basics/blogging/) for detailed
+See the [blog extension guide](http://middlemanapp.com/basics/blogging/) for
+detailed
 information on configuring and using the blog extension.
 
 ## Credits
 
-Most of the code was based on the [middleman-blog](https://github.com/middleman/middleman-blog)
+Most of the code was based on the
+[middleman-blog](https://github.com/middleman/middleman-blog)
 gem itself, so many thanks to everyone that helped out with it.
 
 ## Contributing

@@ -17,7 +17,7 @@ GIT
 PATH
   remote: .
   specs:
-    middleman-blog-drafts (0.2.0)
+    middleman-blog-drafts (0.3.0)
       middleman-blog (~> 3.5.1)
       middleman-core (~> 3.2.2)
 
@@ -123,6 +123,7 @@ DEPENDENCIES
   kramdown
   middleman-blog-drafts!
   middleman-core!
+  pry
   rake (~> 10.1.0)
   rdoc (~> 3.9)
   sass
