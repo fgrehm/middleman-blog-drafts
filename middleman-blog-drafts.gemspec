@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_runtime_dependency("middleman-core", ["~> 3.2.2"])
-  s.add_runtime_dependency("middleman-blog", ["~> 3.5.1"])
+  s.add_runtime_dependency("middleman-core", ["~> 3.2"])
+  s.add_runtime_dependency("middleman-blog", ["~> 3.5"])
 end
