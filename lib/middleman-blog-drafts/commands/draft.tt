@@ -4,6 +4,3 @@ title: '<%= @title %>'
 tags:
 ---
 
-# <%= @title %>
-
-Write a draft post :-)
