@@ -16,7 +16,8 @@ module Middleman
         # @param [String] The part of the path, e.g. "title"
         # @return [String]
         def path_part(part)
-          @_path_parts ||= blog_data.drafts.source_template.extract(path)
+          normalized_path = Addressable::URI.parse(path).normalize.to_s
+          @_path_parts ||= blog_data.drafts.source_template.extract(normalized_path)
           @_path_parts[part.to_s]
         end
 
