@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    middleman-blog-drafts (0.3.2)
+    middleman-blog-drafts (0.3.3)
       middleman-blog (~> 3.5)
       middleman-core (~> 3.2)
 
