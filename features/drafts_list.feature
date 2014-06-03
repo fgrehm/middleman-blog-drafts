@@ -5,3 +5,4 @@ Feature: Listing drafts
     Then I should see "New Draft Title"
     And I should see "Other Draft Title"
     And I should see "Drafts List"
+    And I should see "(UNTITLED DRAFT)"

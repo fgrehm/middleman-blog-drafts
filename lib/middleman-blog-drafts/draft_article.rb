@@ -6,6 +6,12 @@ module Middleman
       # methods on {Blog::Drafts::Data} (accessible through BlogData#drafts).
       # @see http://rdoc.info/github/middleman/middleman/Middleman/Sitemap/Resource Middleman::Sitemap::Resource
       module DraftArticle
+        # The title of the draft article, or "(UNTITLED DRAFT)" if no title was provided
+        # @return [String]
+        def title
+          data["title"] || "(UNTITLED DRAFT)"
+        end
+
         # The "slug" of the draft article that shows up in its URL.
         # @return [String]
         def slug
