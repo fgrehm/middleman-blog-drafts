@@ -1,6 +1,8 @@
 ---
 title: '<%= @title %>'
-# date: TBD When publishing
+# date: TBD when publishing
 tags:
 ---
+
+Start your draft here...
 
