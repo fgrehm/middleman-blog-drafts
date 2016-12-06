@@ -1,5 +1,13 @@
 # middleman-blog-drafts
 
+**NOTE: this project is no longer maintained.** It breaks with recent versions
+of middleman and middleman-blog. None of the previous maintainers use middleman
+anymore.
+
+That does not mean the code needs to rot away. **If you see value in this
+project, have the technical skills and interest in maintaining it, please reach
+out!**
+
 [![Build Status](https://travis-ci.org/fgrehm/middleman-blog-drafts.png?branch=master)](https://travis-ci.org/fgrehm/middleman-blog-drafts)
 
 middleman-blog-drafts is an addon for [middleman-blog](https://github.com/middleman/middleman-blog)
